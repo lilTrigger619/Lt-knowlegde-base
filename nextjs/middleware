@@ -1,0 +1,82 @@
+# NextJS
+## Middleware
+
+The middleware functionality of nextjs is so great. Is simply runs a bunch of code on the server before the page loads. 
+
+**NOTE: donot use middleware for page routes with getServerSideProps**
+
+### How to use the middleware for nextjs <=v12.1
+1. Create a _middleware.js file in the folder where you want your routes be affect by the middleware.
+
+2. If you put it in the pages folder, it will affect all the items in the pages folder. So it is best to create a folder for the page you wanna use middleware and put it inside. Example; /pages/card/_middleware.js
+	
+3. Create and export a function (not default export ) middlware(), 
+
+		// /pages/dashboard/_middleware.js or /pages/dashboard/_middleware.ts
+		import {NextResponse, NextRequest} from "next/server";
+		
+		export function middleware(NextRequest: req){
+			const {url} = req;
+			if(auth){
+				const NextResponse: res = NextResponse.next();
+				return res;
+			}else{
+				const NextResponse: res = NextResponse.rewrite( new URL("/login", url));
+				return res;
+			};	
+		};
+
+4.  You can set headers and do anyother thing with the response just like a normal response object.
+
+5. It is also adviced not to use axios or anyother api request library. Fetch is the only one acceptable.
+
+6. Middleware can also be used in the api folder. Basically when you make a request to an api route, the middleware will run first  then when you return NextResponse.next() the api route will run else return a new Response object with all the required props. Like so
+
+		// /pages/api/auth/_middleware.js or /pages/api/auth/_middleware.ts
+		import {NextResponse, NextRequest} from "next/server";
+		
+		export function middleware(NextRequest:req){
+			if(auth){
+				//if authenticated
+				return NextResponse.next();
+			}else{
+				//when not authenticated
+				return new Response(JSON.stringify({data:"Unauthorized"}), {
+					status: 401,
+					headers: {
+						"content-type": "application/json",
+					},
+				})
+			};
+		};
+	
+7. We return a new Response which is already part of the edge api's, because we want to return an object bak to the request and stop them from hitting the api route.
+
+
+### How to use the middleware for nextjs >= v12.2
+1. Create a middleware.js file in the root of the page. Right before the pages folder.
+
+2. Create and export a function (not default export ) middlware(), and also create and export a const variable config containing an object of matchers like so:
+
+		// /middleware.js or middleware.ts
+		import {NextResponse, NextRequest} from "next/server";
+		
+		export const config = {
+			matcher: ["/", "/about"],
+		};
+		
+		export function middleware(NextRequest: req){
+			const {url} = req;
+			if(auth){
+				const NextResponse: res = NextResponse.next();
+				return res;
+			}else{
+				const NextResponse: res = NextResponse.rewrite( new URL("/login", url));
+				return res;
+			};	
+		};
+
+3.  You can set headers and do anyother thing with the response just like a normal response object.
+
+4. It is also adviced not to use axios or anyother api request library. Fetch is the only one accept
+	

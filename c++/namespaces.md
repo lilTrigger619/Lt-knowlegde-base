@@ -63,4 +63,7 @@ The **using** keyword is used to declare the various names in a namesapce. It ca
 	   	}
 	   	
 In the above program, shows how namespaces are used.
-T
+
+To be able to use a a globally defined function or variable, we use a double 
+semi-colon "::"  to preceed the name of the global variable we want to call. Which is use to differenciate a method from a namespace  from that
+which is defined globally.
