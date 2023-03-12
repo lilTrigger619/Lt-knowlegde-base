@@ -88,3 +88,4 @@ serverInstance.listen(8000, function (req, res) {
   console.log("Server listening on http://localhost:8000");
 });
 ```
+Now when you access *http://localhost:8000/* by default will render the *index.html*
