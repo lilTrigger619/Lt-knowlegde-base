@@ -7,6 +7,7 @@
 1. [os module](#os-module)
 1. [path module](#path-module)
 1. [fs module](#fs-module)
+1. [http module](#http-module)
 
 ---
 
@@ -130,4 +131,25 @@ function writeFilehandler(err, result) {
   //login functionality
   console.log({ result });
 }
+```
+
+---
+
+### http module.
+
+This http module is what will be used to serve our application on a server using a
+protocole known as http.
+
+#### usage.
+
+```js
+const http = require("http");
+
+const Server = http.createServer(serverHandler);
+
+function serverHandler(req, res) {
+  res.write("welcome to the test server");
+  res.end();
+}
+Server.listen(5000, ()=>{});
 ```
