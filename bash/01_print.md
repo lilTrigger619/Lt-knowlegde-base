@@ -168,3 +168,19 @@ then echo "Directory exists!"
 else echo "Directory does not exist."
 fi
 ```
+
+
+## Switch
+```sh
+val=3
+
+case $val in
+  3)
+    echo "THe value is three";;
+  4)
+    echo "The value is four";;
+  *)
+    echo "The value is unknown";;
+  esac
+
+```
